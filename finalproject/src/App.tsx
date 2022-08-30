@@ -32,7 +32,7 @@ interface ConnectOpts {
 }
 //define other variables
 
-// create a provider interface (hint: think of this as an object) to store the Phantom Provider
+// Initialize the object to store the Phantom provider information
 interface PhantomProvider {
   publicKey: PublicKey | null;
   isConnected: boolean | null;
@@ -49,7 +49,7 @@ interface PhantomProvider {
 }
 
 /**
- * @description gets Phantom provider, if it exists
+ * finds the phantom provider
  */
  const getProvider = (): PhantomProvider | undefined => {
   if ("solana" in window) {
@@ -64,6 +64,7 @@ function App() {
   const [provider, setProvider] = useState<PhantomProvider | undefined>(
     undefined
   );
+  //State variables for generated keypair
   var [newPair, setNewPair] = useState<Keypair | undefined>(undefined);
   var [pPK, setpPK] = useState(''); 
   var newPubKeyStr;
@@ -83,12 +84,7 @@ function App() {
 	  else setProvider(undefined);
   }, []);
 
-  /**
-   * @description prompts user to connect wallet if it exists.
-	 * This function is called when the connect wallet button is clicked
-   */
-
-  // Function for generating new keypair to bind to the first button, also airdrops 2 SOL + extra sol for fees to the wallet
+    // Function for generating new keypair to bind to the first button
   const generatePair = async () => {
     // Import Solana web3 functionalities
     const {
